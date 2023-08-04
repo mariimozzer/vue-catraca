@@ -34,6 +34,8 @@
 <script>
 
 import ButtonComponent from '@/components/button/ButtonComponent.vue';
+import setorService from '@/service/setor-service';
+import Setor from '@/models/setor-model';
 
 export default {
    
@@ -43,9 +45,28 @@ export default {
     },
     data(){
         return {
-            mensagem: 'tela de setor'
+            setores: [],
         }
-    }
+    },
+
+    methods:{
+
+        obterTodos() {
+            setorService.obterTodos()
+            .then(response => { 
+                this.setores = response.data.map(s => new Setor(s));
+                console.log(this.setores);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+    },
+  
+    mounted(){
+        this.obterTodos();
+    },
+ 
 }
 </script>
 
