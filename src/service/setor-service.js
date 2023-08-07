@@ -7,7 +7,8 @@ function obterTodos(){
         .then(response => resolve(response))
         .catch(error => reject(error));
     });
-}
+} 
+
 
 function obterPorId(id){
     return new Promise((resolve, reject) => {

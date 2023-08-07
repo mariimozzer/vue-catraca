@@ -16,7 +16,7 @@
 
        <div class="row">
         <div class="col-sm-12">
-               <table class="table">
+               <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Código</th>
@@ -24,6 +24,13 @@
                         <th></th>
                     </tr>
                 </thead>
+                <tbody>
+                    <tr v-for="item in setores" :key="item.id">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.nome }}</td>
+                        <td>Editar/Excluir</td>
+                    </tr>
+                </tbody>
                </table> 
         </div>
        </div>
@@ -36,6 +43,8 @@
 import ButtonComponent from '@/components/button/ButtonComponent.vue';
 import setorService from '@/service/setor-service';
 import Setor from '@/models/setor-model';
+import conversorDeData from '@/utils/conversor-data'
+
 
 export default {
    
@@ -49,22 +58,31 @@ export default {
         }
     },
 
+    filters: {
+
+    },
+
     methods:{
 
-        obterTodos() {
+        obterTodosSetores() {
             setorService.obterTodos()
             .then(response => { 
-                this.setores = response.data.map(s => new Setor(s));
+                console.log(response);
+                this.setores = response.data.data.map(s => new Setor(s));
                 console.log(this.setores);
             })
             .catch(error => {
                 console.log(error);
             });
         }
+
+
     },
   
     mounted(){
-        this.obterTodos();
+
+        this.obterTodosSetores();
+
     },
  
 }
