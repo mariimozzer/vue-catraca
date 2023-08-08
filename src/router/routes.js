@@ -1,4 +1,5 @@
 import SetorView from '../views/SetorView.vue';
+import SetorCadastro from '../views/SetoresCadastro.vue'
 import LoginView from '../views/LoginView.vue';
 
 const routes = [
@@ -14,7 +15,21 @@ const routes = [
         name: 'Setor',
         component: SetorView,
         title: 'Setor',
-        meta: { requiredAuth: false }
+        meta: { requiredAuth: true }
+    },
+    {
+        path: '/setor/novo',
+        name: 'NovoSetor',
+        component: SetorCadastro,
+        title: 'Adicionar Setor',
+        meta: { requiredAuth: true }
+    },
+    {
+        path: '/setor/editar',
+        name: 'EditarSetor',
+        component: SetorCadastro,
+        title: 'Editar Setor',
+        meta: { requiredAuth: true }
     },
 ];
 

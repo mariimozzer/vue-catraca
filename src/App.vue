@@ -51,4 +51,24 @@ hr {
   margin-top: 20px;
 }
 
+.btn-primary,
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:focus-visible,
+.btn-primary:visited,
+.btn-primary:not(:disabled):not(.disabled):active{
+  color: #fff;
+  background-color: var(--cor-primaria);
+  border: var(--cor-primaria);
+  outline: none;
+  box-shadow: none;
+  min-width: 90px;
+}
+
+.btn-primary:hover{
+  color: #fff;
+  background-color: var(--cor-secundaria);
+  border-color: var(--cor-secundaria);
+}
+
 </style>

@@ -11,7 +11,7 @@ function obterTodos(){
 
 
 function obterPorId(id){
-    return new Promise((resolve, reject) => {
+    return new Promise( (resolve, reject) => {
         return api.get(`/setor/${id}`)
         .then(response => resolve(response))
         .catch(error => reject(error));
