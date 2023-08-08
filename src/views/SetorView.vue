@@ -43,7 +43,7 @@
 import ButtonComponent from '@/components/button/ButtonComponent.vue';
 import setorService from '@/service/setor-service';
 import Setor from '@/models/setor-model';
-import conversorDeData from '@/utils/conversor-data'
+//import conversorDeData from '@/utils/conversor-data'
 
 
 export default {
