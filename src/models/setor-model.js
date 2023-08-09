@@ -11,4 +11,12 @@ export default class Setor {
         this.dataCadastro = obj.dataCadastro; */
 
     }
+
+    modeloValidoCadastro() {
+        return !!this.nome
+    }
+
+    modeloValidoAtualizar() {
+        return !!(this.id && this.nome)
+    }
 }

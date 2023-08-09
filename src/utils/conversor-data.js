@@ -20,7 +20,19 @@ function aplicarMascaraDataHoraISO(data) {
 
 }
 
+function aplicarMascaraISOFormatoAmericano(data) {
+    if(data){
+
+        let dataAmericana = moment(data).locale('pt-br').format('YYYY/MM/DD HH:mm:ss');
+        return dataAmericana + "T00:00:00";
+
+    } 
+    return undefined;
+
+}
+
 export default {
     aplicarMascaraDataISO,
-    aplicarMascaraDataHoraISO
+    aplicarMascaraDataHoraISO,
+    aplicarMascaraISOFormatoAmericano
 }

@@ -1,76 +1,148 @@
 <template>
     <div class="container">
     
+    
+    
         <div class="row">
+    
+    
     
             <div class="col-sm-12">
     
+    
+    
                 <h2>Setores</h2>
+    
+    
     
                 <hr>
     
+    
+    
             </div>
     
+    
+    
         </div>
+    
+    
+    
+    
     
     
     
         <div class="row sub-contnainer">
     
+    
+    
             <div class="col-sm-3">
+    
+    
     
                 <ButtonComponent :callback="adicionarSetor" value="Adicionar"></ButtonComponent>
     
+    
+    
             </div>
     
+    
+    
         </div>
+    
+    
     
         <div class="row">
     
+    
+    
             <div class="col-sm-12">
+    
+    
     
                 <table class="table table-hover">
     
+    
+    
                     <thead>
+    
+    
     
                         <tr>
     
+    
+    
                             <th>Código</th>
+    
+    
     
                             <th>Setor</th>
     
+    
+    
                             <th></th>
     
+    
+    
                         </tr>
+    
+    
     
                     </thead>
     
+    
+    
                     <tbody>
+    
+    
     
                         <tr v-for="item in setores" :key="item.id">
     
+    
+    
                             <td>{{ item.id }}</td>
+    
+    
     
                             <td>{{ item.nome }}</td>
     
+    
+    
                             <td>
+    
+    
     
                                 <i @click="editarSetor(item)" class="fa fa-edit icones-tabela"></i>
     
+    
+    
                                 <i @click="excluirSetor(item)" class="fa fa-trash icones-tabela"></i>
+    
+    
     
                             </td>
     
+    
+    
                         </tr>
+    
+    
     
                     </tbody>
     
+    
+    
                 </table>
+    
+    
     
             </div>
     
+    
+    
         </div>
-        
+    
+    
+    
     </div>
 </template>
 
@@ -99,11 +171,18 @@ export default {
 
     methods: {
 
+        ordenarSetores(a, b) {
+            return (a.id < b.id) ? -1 : (a.id > b.id) ? 1 : 0;
+        },
+
         obterTodosSetores() {
-            setorService.obterTodos()
+            setorService
+                .obterTodos()
                 .then(response => {
-                    this.setores = response.data.data.map(s => new Setor(s));
-                    console.log(this.setores);
+
+                    let setores = response.data.data.map(s => new Setor(s));
+
+                    this.setores = setores.sort(this.ordenarSetores).reverse();
                 })
                 .catch(error => {
                     console.log(error);
@@ -122,12 +201,24 @@ export default {
 
         },
 
-        excluirSetor() {
+        excluirSetor(setor) {
 
-            alert("excluir setor");
+            if (confirm(`Deseja excluir o setor "${setor.id} - ${setor.nome}"?`)) {
 
+                setorService.deletar(setor.id)
+                    .then(() => {
+
+                        let indice = this.setores.findIndex(s => s.id == setor.id);
+
+                        this.setores.splice(indice, 1);
+
+                        alert("Setor excluído com sucesso!");
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            }
         },
-
 
     },
 

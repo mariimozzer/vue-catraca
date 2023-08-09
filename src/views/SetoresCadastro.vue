@@ -14,7 +14,7 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     <label for="id">Código</label>
-                    <input type="text" id="id" v-model="setor.id" class="form-control" >                   
+                    <input type="text" id="id" v-model="setor.id" class="form-control" disabled>                   
                 </div>
             </div>
             <div class="col-sm-9">
@@ -33,6 +33,28 @@
                 <button @click="salvarSetor" class="btn btn-primary float-right mr-2">Salvar</button>
             </div>
         </div>
+
+        <!-- modal -->
+
+        <div class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     </div>
@@ -68,7 +90,7 @@ export default {
         obterSetorId(id) {
             setorService.obterPorId(id)
             .then(response => {
-                console.log(response);
+                    console.log(response);
                     this.setor = new Setor(response.data);
                     console.log(this.setor);
                 })
@@ -82,14 +104,41 @@ export default {
             this.$router.push({ name: "Setor" })
         },
 
-        salvarSetor() {
-
+        atualizarSetor() {
+             setorService.atualizar(this.setor)
+                .then(() => {
+                    alert("Setor atualizado com sucesso!");
+                    this.$router.push({name: "Setor"})
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
 
+        cadastrarSetor() {
+            
+           /* if(this.setor.modeloValidoCadastro()) {
+                alert("Insira o nome do setor para cadastrar!");
+                return;
+            } */
+
+            setorService.cadastrar(this.setor)
+            .then(()  => {
+                alert("Setor cadastrado com sucesso!");
+                this.setor = new Setor();
+                this.$router.push({ name: "Setor" })
+            })
+            .catch( error => {
+                console.log(error);
+            });
+
+            
+        },
         
-
+        salvarSetor() {
+            (this.modoCadastro) ? this.cadastrarSetor() : this.atualizarSetor();
+        }
     }
-
 }
 
 </script>
