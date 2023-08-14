@@ -1,148 +1,56 @@
 <template>
     <div class="container">
-    
-    
-    
+
         <div class="row">
     
-    
-    
             <div class="col-sm-12">
-    
-    
     
                 <h2>Setores</h2>
     
-    
-    
                 <hr>
-    
-    
     
             </div>
     
-    
-    
         </div>
-    
-    
-    
-    
-    
-    
-    
+
         <div class="row sub-contnainer">
-    
-    
     
             <div class="col-sm-3">
     
-    
-    
                 <ButtonComponent :callback="adicionarSetor" value="Adicionar"></ButtonComponent>
-    
-    
     
             </div>
     
-    
-    
         </div>
     
-    
-    
         <div class="row">
-    
-    
-    
+   
             <div class="col-sm-12">
-    
-    
     
                 <table class="table table-hover">
     
-    
-    
                     <thead>
-    
-    
-    
                         <tr>
-    
-    
-    
                             <th>Código</th>
     
-    
-    
                             <th>Setor</th>
-    
-    
-    
+
                             <th></th>
-    
-    
-    
                         </tr>
-    
-    
-    
                     </thead>
-    
-    
-    
                     <tbody>
-    
-    
-    
                         <tr v-for="item in setores" :key="item.id">
-    
-    
-    
                             <td>{{ item.id }}</td>
-    
-    
-    
                             <td>{{ item.nome }}</td>
-    
-    
-    
                             <td>
-    
-    
-    
                                 <i @click="editarSetor(item)" class="fa fa-edit icones-tabela"></i>
-    
-    
-    
                                 <i @click="excluirSetor(item)" class="fa fa-trash icones-tabela"></i>
-    
-    
-    
                             </td>
-    
-    
-    
                         </tr>
-    
-    
-    
                     </tbody>
-    
-    
-    
                 </table>
-    
-    
-    
             </div>
-    
-    
-    
         </div>
-    
-    
-    
     </div>
 </template>
 
