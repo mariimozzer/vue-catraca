@@ -3,12 +3,23 @@
         <li>
             <router-link to="/">Início</router-link>
         </li>
+
         <li>
-           <router-link to="/setor">Setor</router-link>
+           <router-link to="/acesso">Acessos</router-link>
         </li>
+
         <li>
-           <router-link to="">Pessoa</router-link>
+            <router-link to="/pessoa">Visitantes</router-link>
         </li>
+
+        <li>
+            <router-link to="/pessoa">Pessoas</router-link>
+        </li>
+
+        <li>
+           <router-link to="/setor">Setores</router-link>
+        </li>
+
         <li>
            <router-link to="/login">Sair</router-link>
         </li>
@@ -39,7 +50,4 @@ ul {
     li a:hover{
         background-color: var(--cor-secundaria);
     }
-
-   
-    
 </style>

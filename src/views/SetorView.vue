@@ -5,7 +5,7 @@
     
             <div class="col-sm-12">
     
-                <h2>Setores</h2>
+                <h2>Cadastro de Setores</h2>
     
                 <hr>
     
@@ -17,7 +17,7 @@
     
             <div class="col-sm-3">
     
-                <ButtonComponent :callback="adicionarSetor" value="Adicionar"></ButtonComponent>
+                <ButtonComponent :callback="adicionarSetor" value="Adicionar Setor"></ButtonComponent>
     
             </div>
     
@@ -91,6 +91,8 @@ export default {
                     let setores = response.data.data.map(s => new Setor(s));
 
                     this.setores = setores.sort(this.ordenarSetores).reverse();
+
+                    console.log(setores);
                 })
                 .catch(error => {
                     console.log(error);

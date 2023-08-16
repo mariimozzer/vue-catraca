@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-sm-12">
 
-                <h1 class="titulo">{{ modoCadastro ? "Adicionar" : "Editar" }} Setores</h1>
+                <h1 class="titulo">{{ modoCadastro ? "Adicionar" : "Editar" }} Setor</h1>
                 <hr>
 
             </div>
