@@ -2,44 +2,42 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-
                 <h1 class="titulo">{{ modoCadastro ? "Adicionar" : "Editar" }} Setor</h1>
                 <hr>
-
             </div>
         </div>
-
         <div class="row">
-
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <label for="id">Código</label>
-                    <input type="text" id="id" v-model="setor.id" class="form-control" disabled>                   
-                </div>
-            </div>
-            <div class="col-sm-9">
+            <div class="col-sm-6">
                 <label for="nome">Setor</label>
                 <input type="text" id="nome" v-model="setor.nome" class="form-control">
             </div>
-
         </div>
-
         <div class="row">
-            <div class="col-sm-12">
-                <hr>
-            </div>
-            <div class="col-sm-12 mt-4">
+            <div class="col-sm-9 mt-4">
                 <button @click="cancelarAcao" class="btn btn-default float-right">Cancelar</button>
                 <button @click="salvarSetor" class="btn btn-primary float-right mr-2">Salvar</button>
             </div>
         </div>
-
         <!-- modal -->
-    
-    
-       
-
-
+        <div class="modal is-valid" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
 </template>
 
@@ -90,7 +88,11 @@ export default {
         atualizarSetor() {
              setorService.atualizar(this.setor)
                 .then(() => {
-                    alert("Setor atualizado com sucesso!");
+                    this.$swal({
+                        icon: 'success',
+                        title: 'Setor atualizado com sucesso!',
+                        confirmButtonColor: '#005bc5',
+                    }); //sweet alert 
                     this.$router.push({name: "Setor"})
                 })
                 .catch(error => {
@@ -107,7 +109,12 @@ export default {
 
             setorService.cadastrar(this.setor)
             .then(()  => {
-                alert("Setor cadastrado com sucesso!");
+                this.$swal({
+                    icon: 'success',
+                    title: 'Setor cadastrado com sucesso!',
+                    confirmButtonColor: '#005bc5',
+                }); //sweet alert 
+
                 this.setor = new Setor();
                 this.$router.push({ name: "Setor" })
             })

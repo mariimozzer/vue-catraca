@@ -5,7 +5,7 @@
 
             <div class="col-sm-12">
 
-                <h2>Cadastro de Pessoas</h2>
+                <h2>Visitantes</h2>
 
                 <hr>
 
@@ -17,7 +17,7 @@
 
             <div class="col-sm-3">
 
-                <!-- <ButtonComponent :callback="adicionarPessoa" value="Adicionar"></ButtonComponent> -->
+                <ButtonComponent :callback="adicionarPessoa" value="Adicionar visitante"></ButtonComponent>
 
             </div>
 
@@ -33,32 +33,21 @@
                         <tr>
                             <th>Código</th>
                             <th>Nome</th>
-                            <th>Gênero</th>
-                            <th>Datade Nascimento</th>
                             <th>CPF</th>
-                            <th>E-mail</th>
-                            <th>Telefone</th>
-                            <th>Setor</th>
-                            <th>Visitante</th>
                             <th>Foto</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in pessoas" :key="item.id">
+                        <tr v-for="item in pessoas" :key="item.id" v-show="item.visitante == 1">
+                            <!-- v-show para trazer somente as pessoas marcadas como colaboradores (visitante = 0) -->
                             <td>{{ item.id }}</td>
                             <td>{{ item.nomeCompleto }}</td>
-                            <td>{{ item.sexo }}</td>
-                            <td>{{ item.dtNasc }}</td>
                             <td>{{ item.cpf }}</td>
-                            <td>{{ item.email }}</td>
-                            <td>{{ item.celular }}</td>
-                            <td>{{ item.id_setor }}</td>
-                            <td>{{ item.visitante }}</td>
                             <td>{{ item.path_image }}</td>
-                            <!-- <td>
-                                <i @click="editarSetor(item)" class="fa fa-edit icones-tabela"></i>
-                                <i @click="excluirSetor(item)" class="fa fa-trash icones-tabela"></i>
-                            </td> -->
+                            <td>
+                                <i @click="editarColaborador(item)" class="fa fa-edit icones-tabela"></i>
+                                <i @click="excluirColaborador(item)" class="fa fa-trash icones-tabela"></i>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -68,7 +57,7 @@
 </template>
 
 <script>
-//import ButtonComponent from '@/components/button/ButtonComponent.vue';
+import ButtonComponent from '@/components/button/ButtonComponent.vue';
 import pessoaService from '@/service/pessoa-service';
 import Pessoa from '../models/pessoa-model'
 //import conversorDeData from '@/utils/conversor-data'
@@ -76,9 +65,9 @@ import Pessoa from '../models/pessoa-model'
 
 export default {
 
-    name: 'PessoaView',
+    name: 'VisitanteView',
     components: {
-       // ButtonComponent
+        ButtonComponent
     },
     data() {
         return {

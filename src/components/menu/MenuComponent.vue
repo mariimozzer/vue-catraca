@@ -9,11 +9,11 @@
         </li>
 
         <li>
-            <router-link to="/pessoa">Visitantes</router-link>
+            <router-link to="/visitante">Visitantes</router-link>
         </li>
 
         <li>
-            <router-link to="/pessoa">Pessoas</router-link>
+            <router-link to="/colaborador">Colaboradores</router-link>
         </li>
 
         <li>

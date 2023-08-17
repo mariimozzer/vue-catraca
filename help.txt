@@ -1,0 +1,232 @@
+
+  ws://192.168.0.107:8081 Raul
+  ws://192.163.44.230:8080 Darley
+ 
+
+
+
+biblioteca de WebSocket vue-native-websocket - faz a integração do WebSocket com Vue
+
+** npm install vue-native-websocket
+
+import Vue from 'vue'
+import App from './App.vue'
+import VueNativeSock from 'vue-native-websocket'
+
+Vue.config.productionTip = false
+
+Vue.use(VueNativeSock, 'ws://localhost:3000', {
+  reconnection: true,
+  reconnectionAttempts: 5,
+  reconnectionDelay: 3000
+})
+
+new Vue({
+  render: h => h(App),
+}).$mount('#app')
+
+
+Conexão
+
+<template>
+  <div>
+    <div v-for="message in messages" :key="message.id">{{ message.text }}</div>
+    <input v-model="newMessage" @keyup.enter="sendMessage" placeholder="Digite uma mensagem">
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      messages: [],
+      newMessage: ''
+    }
+  },
+  methods: {
+    sendMessage() {
+      this.$socket.send(JSON.stringify({ text: this.newMessage }))
+      this.newMessage = ''
+    }
+  },
+  sockets: {
+    message(data) {
+      this.messages.push(JSON.parse(data))
+    }
+  }
+}
+</script>
+
+
+
+
+<template>
+  <div>
+    <div v-if="showMessage">{{ receivedMessage }}</div>
+    <button @click="sendMessage">Enviar Mensagem</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      receivedMessage: '',
+      showMessage: false
+    }
+  },
+  methods: {
+    sendMessage() {
+      // Enviar mensagem para o servidor WebSocket
+      this.$socket.send('Olá, servidor!')
+    }
+  },
+  sockets: {
+    message(data) {
+      // Receber mensagem do servidor WebSocket
+      this.receivedMessage = data
+      this.showMessage = true
+
+      if (data === 'Iniciar Condição 1') {
+        // Fazer algo para a condição 1
+      } else if (data === 'Iniciar Condição 2') {
+        // Fazer algo para a condição 2
+      } else {
+        // Fazer algo para outros casos
+      }
+    }
+  }
+}
+</script>
+
+
+npm install axios
+
+<template>
+  <div>
+    <div v-for="post in posts" :key="post.id">
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.body }}</p>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      posts: []
+    }
+  },
+  methods: {
+    fetchPosts() {
+      axios.get('https://jsonplaceholder.typicode.com/posts')
+        .then(response => {
+          this.posts = response.data;
+        })
+        .catch(error => {
+          console.error('Erro ao buscar posts:', error);
+        });
+    }
+  },
+  sockets: {
+    commandReceived(command) {
+      if (command === 'fetchPosts') {
+        this.fetchPosts();
+      }
+    }
+  },
+  created() {
+    // Conectar-se ao WebSocket e lidar com a lógica de recepção de comandos
+    this.$socket.send('Conectar'); // Envie um comando inicial para o servidor
+    this.$socket.onmessage = event => {
+      const command = event.data;
+      this.$socket.emit(command, 'Resposta para ' + command);
+    };
+  }
+}
+</script>
+
+o componente Vue faz uma chamada à API JSONPlaceholder para buscar posts quando o comando "fetchPosts" é recebido através do WebSocket. A resposta da API é armazenada na variável posts, que é usada para exibir os dados na interface.
+Lembre-se de que você precisa ajustar o servidor WebSocket para enviar comandos corretamente e a API externa para obter os dados desejados.
+
+
+
+
+
+
+
+Claro, vou explicar o código passo a passo:
+Template: No template, você tem um loop v-for que percorre os posts e exibe o título e o corpo de cada post.
+vue
+Copy code
+<template>
+  <div>
+    <div v-for="post in posts" :key="post.id">
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.body }}</p>
+    </div>
+  </div>
+</template>
+
+Script: No script, você está importando a biblioteca axios para fazer solicitações HTTP. Em seguida, você define o componente Vue.
+vue
+Copy code
+<script>
+import axios from 'axios';
+
+export default {
+  // ...
+}
+</script>
+
+Data: Dentro da seção data, você define a variável posts como um array vazio. Esta variável será usada para armazenar os posts obtidos da API externa.
+vue
+Copy code
+data() {
+  return {
+    posts: []
+  }
+},
+
+Método fetchPosts: O método fetchPosts usa a biblioteca axios para fazer uma solicitação GET à API JSONPlaceholder. Quando a resposta é bem-sucedida, os dados dos posts são armazenados na variável posts.
+vue
+Copy code
+methods: {
+  fetchPosts() {
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+      .then(response => {
+        this.posts = response.data;
+      })
+      .catch(error => {
+        console.error('Erro ao buscar posts:', error);
+      });
+  }
+},
+
+Hooks do WebSocket: Dentro da seção sockets, você define a lógica para lidar com os comandos recebidos via WebSocket. Quando um comando é recebido, se for igual a "fetchPosts", o método fetchPosts é chamado para buscar os posts da API.
+vue
+Copy code
+sockets: {
+  commandReceived(command) {
+    if (command === 'fetchPosts') {
+      this.fetchPosts();
+    }
+  },
+},
+
+Hook created: O hook created é executado quando o componente é criado. Aqui, você se conecta ao WebSocket, envia um comando inicial ("Conectar") para o servidor e define um manipulador para mensagens recebidas. Quando uma mensagem é recebida, ela é interpretada como um comando e o método correspondente é chamado.
+vue
+Copy code
+created() {
+  // Conectar-se ao WebSocket e lidar com a lógica de recepção de comandos
+  this.$socket.send('Conectar'); // Envie um comando inicial para o servidor
+  this.$socket.onmessage = event => {
+    const command = event.data;
+    this.$socket.emit(command, 'Resposta para ' + command);
+  };
+}
+
+Lembre-se de que esse é um exemplo simplificado e educacional. Em um aplicativo real, você precisará considerar aspectos de gerenciamento de estado, tratamento de erros, segurança e otimizações. Certifique-se também de que seu servidor WebSocket esteja configurado para enviar comandos corretamente e que a API externa esteja acessível e retornando dados corretos.

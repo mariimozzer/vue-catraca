@@ -13,17 +13,15 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Código</th>
                             <th>Pessoa</th>
                             <th>Data e Hora</th>
                             <th>Local</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in acessos" :key="item.pessoa_id">
-                            <td>{{ item.pessoa_id }}</td>
-                            <td>{{ item.nomeCompleto }}</td>
+                        <tr v-for="item in acessos" :key="item.id">
                             <td>{{ item.acesso_DH }}</td>
+                            <td>{{ item.nomeCompleto }}</td>
                             <td>{{ item.local_nome }}</td>
                         </tr>
                     </tbody>
@@ -58,22 +56,16 @@ export default {
 
     methods: {
  
-        ordenarAcessos(a, b) {
+        /* ordenarAcessos(a, b) {
             return (a.id < b.id) ? -1 : (a.id > b.id) ? 1 : 0;
-        },
+        }, */
 
         obterTodosAcessos() {
-                acessoService
-                .obterTodos()
-                .then(response => {
-
-                    let acessos = response.data.data.map(a => new Acesso(a));
-
-                    console.log(acessos);
-
-                    this.acessos = acessos.sort(this.ordenarAcessos).reverse();
-
-                    console.log(acessos);
+                acessoService.obterTodos()
+                .then((response) => {
+                    this.acessos = response.data.data.map((a) => new Acesso(a));
+                   // this.acessos = acessos.sort(this.ordenarAcessos).reverse();
+                    /* console.log(acessos); */
                 })
                 .catch(error => {
                     console.log(error);

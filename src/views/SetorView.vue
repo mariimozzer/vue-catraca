@@ -5,36 +5,23 @@
     
             <div class="col-sm-12">
     
-                <h2>Cadastro de Setores</h2>
+                <h2>Setores</h2>
     
                 <hr>
-    
             </div>
-    
         </div>
-
         <div class="row sub-contnainer">
-    
             <div class="col-sm-3">
-    
                 <ButtonComponent :callback="adicionarSetor" value="Adicionar Setor"></ButtonComponent>
-    
             </div>
-    
         </div>
-    
         <div class="row">
-   
             <div class="col-sm-12">
-    
                 <table class="table table-hover">
-    
                     <thead>
                         <tr>
                             <th>Código</th>
-    
                             <th>Setor</th>
-
                             <th></th>
                         </tr>
                     </thead>
@@ -122,7 +109,12 @@ export default {
 
                         this.setores.splice(indice, 1);
 
-                        alert("Setor excluído com sucesso!");
+                       // alert("Setor excluído com sucesso!");
+                        this.$swal({
+                            icon: 'success',
+                            title: 'Setor excluído com sucesso',
+                            confirmButtonColor: '#005bc5',
+                        }); //sweet alert 
                     })
                     .catch(error => {
                         console.log(error);

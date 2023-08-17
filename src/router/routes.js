@@ -3,7 +3,8 @@ import SetorCadastro from '../views/SetoresCadastro.vue'
 import LoginView from '../views/LoginView.vue';
 import AcessoView from '../views/AcessoView.vue';
 import WebsocketComponent from '../components/websocket/WebsocketComponent.vue'
-import PessoaView from '../views/PessoaView.vue';
+import ColaboradorView from '../views/ColaboradorView.vue'
+import VisitanteView from '../views/VisitanteView.vue'
 
 const routes = [
     {
@@ -49,10 +50,17 @@ const routes = [
         meta: { requiredAuth: true }
     },
     {
-        path: '/pessoa',
-        name: 'Pessoa',
-        component: PessoaView,
-        title: 'Pessoa',
+        path: '/colaborador',
+        name: 'Colaborador',
+        component: ColaboradorView,
+        title: 'Colaborador',
+        meta: { requiredAuth: true }
+    },
+    {
+        path: '/visitante',
+        name: 'Visitante',
+        component: VisitanteView,
+        title: 'Visitante',
         meta: { requiredAuth: true }
     },
 ];
