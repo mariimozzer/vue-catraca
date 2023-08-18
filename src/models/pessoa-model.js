@@ -7,24 +7,19 @@ export default class Acesso {
         this.nomeCompleto = obj.nomeCompleto;
         this.sexo = obj.sexo;
         this.dtNasc = obj.dtNasc;
-        this.cpf = obj.cpf;
+        this.CPF = obj.CPF;
         this.email = obj.email;
         this.celular = obj.celular;
         this.id_setor = obj.id_setor;
         this.visitante = obj.visitante;
         this.path_image = obj.path_image;       
-
-        /* this.valor = obj.valor || 0;
-        this.quantidadeEstoque = obj.quantidadeEstoque || 0;
-        this.dataCadastro = obj.dataCadastro; */
-
     }
 
-  /*   modeloValidoCadastro() {
+     modeloValidoCadastro() {
         return !!this.nomeCompleto
     }
 
     modeloValidoAtualizar() {
         return !!(this.id && this.nomeCompleto)
-    } */
+    }
 }

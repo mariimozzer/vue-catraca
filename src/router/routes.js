@@ -5,8 +5,17 @@ import AcessoView from '../views/AcessoView.vue';
 import WebsocketComponent from '../components/websocket/WebsocketComponent.vue'
 import ColaboradorView from '../views/ColaboradorView.vue'
 import VisitanteView from '../views/VisitanteView.vue'
+import HomeView from '../views/HomeView.vue'
+import ColaboradorCadastro from '../views/ColaboradorCadastro.vue'
 
 const routes = [
+    {
+        path: '/',
+        name: 'Início',
+        component: HomeView,
+        title: 'Home',
+        meta: { requiredAuth: false }
+    },
     {
         path: '/login',
         name: 'Login',
@@ -54,6 +63,20 @@ const routes = [
         name: 'Colaborador',
         component: ColaboradorView,
         title: 'Colaborador',
+        meta: { requiredAuth: true }
+    },
+     {
+        path: '/colaborador/novo',
+        name: 'NovoColaborador',
+        component: ColaboradorCadastro,
+        title: 'Adicionar Colaborador',
+        meta: { requiredAuth: true }
+    },
+    {
+        path: '/colaborador/editar',
+        name: 'EditarColaborador',
+        component: ColaboradorCadastro,
+        title: 'Editar Colaborador',
         meta: { requiredAuth: true }
     },
     {

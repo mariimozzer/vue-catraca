@@ -59,56 +59,37 @@ export default {
             setores: [],
         }
     },
-
-    filters: {
-
-    },
-
     methods: {
-
         ordenarSetores(a, b) {
             return (a.id < b.id) ? -1 : (a.id > b.id) ? 1 : 0;
         },
-
         obterTodosSetores() {
             setorService
                 .obterTodos()
                 .then(response => {
 
-                    let setores = response.data.data.map(s => new Setor(s));
+                    this.setores = response.data.data.map(s => new Setor(s));
 
-                    this.setores = setores.sort(this.ordenarSetores).reverse();
+                    this.setores = this.setores.sort(this.ordenarSetores).reverse();
 
-                    console.log(setores);
+                    console.log(this.setores);
                 })
                 .catch(error => {
                     console.log(error);
                 });
         },
-
         adicionarSetor() {
-
             this.$router.push({ name: "NovoSetor" })
-
         },
-
         editarSetor(setor) {
-
             this.$router.push({ name: "EditarSetor", params: { id: setor.id } })
-
         },
-
         excluirSetor(setor) {
-
             if (confirm(`Deseja excluir o setor "${setor.id} - ${setor.nome}"?`)) {
-
                 setorService.deletar(setor.id)
                     .then(() => {
-
                         let indice = this.setores.findIndex(s => s.id == setor.id);
-
                         this.setores.splice(indice, 1);
-
                        // alert("Setor excluído com sucesso!");
                         this.$swal({
                             icon: 'success',
@@ -118,18 +99,13 @@ export default {
                     })
                     .catch(error => {
                         console.log(error);
-                    })
-            }
-        },
-
-    },
+                    })}
+                },
+            },
 
     mounted() {
-
         this.obterTodosSetores();
-
     },
-
 }
 </script>
 

@@ -31,18 +31,16 @@
 
                     <thead>
                         <tr>
-                            <th>Código</th>
                             <th>Nome</th>
                             <th>CPF</th>
                             <th>Foto</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in pessoas" :key="item.id" v-show="item.visitante == 1">
-                            <!-- v-show para trazer somente as pessoas marcadas como colaboradores (visitante = 0) -->
-                            <td>{{ item.id }}</td>
+                        <tr v-for="item in pessoas" :key="item" v-show="item.visitante == 1">
+                            <!-- v-show para trazer somente as pessoas marcadas como visitantes (visitante = 1) -->
                             <td>{{ item.nomeCompleto }}</td>
-                            <td>{{ item.cpf }}</td>
+                            <td>{{ item.CPF }}</td>
                             <td>{{ item.path_image }}</td>
                             <td>
                                 <i @click="editarColaborador(item)" class="fa fa-edit icones-tabela"></i>

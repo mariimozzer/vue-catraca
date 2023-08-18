@@ -1,43 +1,68 @@
 <template>
     <div class="container">
+
         <div class="row">
             <div class="col-sm-12">
                 <h1 class="titulo">{{ modoCadastro ? "Adicionar" : "Editar" }} Colaborador</h1>
                 <hr>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <label for="nomeCompleto">Colaborador</label>
+
+        <div class="row mt-3">
+            <div class="col-sm-8">
+                <label for="nomeCompleto">Nome</label>
                 <input type="text" id="nomeCompleto" v-model="pessoa.nomeCompleto" class="form-control">
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-9 mt-4">
-                <button @click="cancelarAcao" class="btn btn-default float-right">Cancelar</button>
-                <button @click="salvarSetor" class="btn btn-primary float-right mr-2">Salvar</button>
+            <div class="col-sm-4">
+                <label for="cpf">CPF</label>
+                <input type="text" id="CPF" v-model="pessoa.CPF" class="form-control">
             </div>
         </div>
-        <!-- modal -->
-        <div class="modal is-valid" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Modal body text goes here.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
+
+        <div class="row mt-3 ">
+
+            <div class=" col-sm-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="name" id="sexo" value="feminino"
+                        v-bind:checked="pessoa.sexo == 'f'">
+                    <label class="form-check-label" for="sexo">Feminino</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="sexo" id="sexo" value="masculino"
+                        v-bind:checked="pessoa.sexo == 'm'">
+                    <label class="form-check-label" for="sexo">Masculino</label>
                 </div>
             </div>
+            <div class="col-sm-2">
+                <label for="dtNasc">Data de nascimento</label>
+                <input type="text" id="dtNasc" v-model="pessoa.dtNasc" class="form-control">
+            </div>
+            <div class="col-sm-4">
+                <label for="email">E-mail</label>
+                <input type="text" id="email" v-model="pessoa.email" class="form-control">
+            </div>
+            <div class="col-sm-3">
+                <label for="celular">Celular</label>
+                <input type="text" id="celular" v-model="pessoa.celular" class="form-control">
+            </div>
+
         </div>
+
+        <div class="row mt-3">
+        <div class="col-sm-3">
+            <label for="id_setor">Setor</label>
+            <input type="text" id="id_setor" v-model="pessoa.id_setor" class="form-control">
+        </div>
+
+    </div>
+
+        <div class="row">
+            <div class="col-sm-12 mt-4">
+                <button @click="cancelarAcao" class="btn btn-default float-right">Cancelar</button>
+                <button @click="salvarPessoa" class="btn btn-primary float-right mr-2">Salvar</button>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -47,27 +72,22 @@ import pessoaService from '@/service/pessoa-service';
 
 export default {
 
-    name: "PessoaCadastro",
+    name: "ColaboradorCadastro",
     data() {
         return {
             pessoa: new Pessoa(),
             modoCadastro: true,
-
         }
     },
 
     mounted() {
-
         let id = this.$route.params.id;
         if (!id) return;  //verifica se a tela trouxe algo, caso não tenha pessoa, a tela será carregada em modo de cadastro
-
         this.modoCadastro = false;
         this.obterPessoaId(id);
-
     },
 
     methods: {
-
         obterPessoaId(id) {
             pessoaService.obterPorId(id)
                 .then(response => {
@@ -78,7 +98,7 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
-        },
+            },
 
         cancelarAcao() {
             this.pessoa = new Pessoa();
@@ -94,26 +114,22 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
-        },
+            },
 
         cadastrarPessoa() {
-
-            /* if(this.setor.modeloValidoCadastro()) {
-                 alert("Insira o nome do setor para cadastrar!");
+            if(this.pessoa.modeloValidoCadastro()) {
+                 alert("Insira o nome do colaborador para cadastrar!");
                  return;
-             } */
-
+             }
             pessoaService.cadastrar(this.pessoa)
                 .then(() => {
-                    alert("Pessoa cadastrado com sucesso!");
+                    alert("Colaborador cadastrado com sucesso!");
                     this.pessoa = new Pessoa();
                     this.$router.push({ name: "Colaborador" })
                 })
                 .catch(error => {
                     console.log(error);
                 });
-
-
         },
 
         salvarPessoa() {
