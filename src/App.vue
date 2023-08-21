@@ -70,5 +70,4 @@ hr {
   background-color: var(--cor-secundaria);
   border-color: var(--cor-secundaria);
 }
-
 </style>

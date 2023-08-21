@@ -1,27 +1,32 @@
 <template>
     <div class="container">
         <div class="row">
-                <div class="col-sm-12">
-                    <h2>Acessos</h2>
-                    <hr>
-                </div>
+            <div class="col-sm-12">
+                <h2>Acessos</h2>
+                <hr>
             </div>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Pessoa</th>
-                    <th>Data e Hora</th>
-                    <th>Local</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in acessos" :key="item.id">
-                    <td>{{ item.nomeCompleto }}</td>
-                    <td>{{ item.acesso_DH }}</td> 
-                    <td>{{ item.local_nome }}</td>
-                </tr>
-            </tbody>
-        </table>
+        </div>
+        <div class="row justify-content-between">
+            <table class="table table-hover col-sm-6">
+                <thead>
+                    <tr>
+                        <th>Pessoa</th>
+                        <th>Data e Hora</th>
+                        <th>Local</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in acessos" :key="item.id">
+                        <td>{{ item.nomeCompleto }}</td>
+                        <td>{{ item.acesso_DH }}</td>
+                        <td>{{ item.local_nome }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <img v-bind:src="'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1200px-User_icon_2.svg.png'" img/>
+        </div>
+        
+
     </div>
 </template>
 
@@ -36,6 +41,7 @@ export default {
         return {
             acessos: [],
             payload: [],
+            images: [],
         };
     },
 
@@ -55,3 +61,11 @@ export default {
     },
 };
 </script>
+
+<style>
+img {
+   width: 400px;
+    height: 400px;
+    overflow: hidden;    
+}
+</style>

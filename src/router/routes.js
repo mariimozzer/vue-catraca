@@ -2,11 +2,13 @@ import SetorView from '../views/SetorView.vue';
 import SetorCadastro from '../views/SetoresCadastro.vue'
 import LoginView from '../views/LoginView.vue';
 import AcessoView from '../views/AcessoView.vue';
-import WebsocketComponent from '../components/websocket/WebsocketComponent.vue'
-import ColaboradorView from '../views/ColaboradorView.vue'
-import VisitanteView from '../views/VisitanteView.vue'
-import HomeView from '../views/HomeView.vue'
-import ColaboradorCadastro from '../views/ColaboradorCadastro.vue'
+import WebsocketComponent from '../components/websocket/WebsocketComponent.vue';
+import ColaboradorView from '../views/ColaboradorView.vue';
+import VisitanteView from '../views/VisitanteView.vue';
+import HomeView from '../views/HomeView.vue';
+import ColaboradorCadastro from '../views/ColaboradorCadastro.vue';
+import VisitanteCadastro from '../views/VisitanteCadastro.vue';
+
 
 const routes = [
     {
@@ -84,6 +86,20 @@ const routes = [
         name: 'Visitante',
         component: VisitanteView,
         title: 'Visitante',
+        meta: { requiredAuth: true }
+    },
+    {
+        path: '/visitante/novo',
+        name: 'NovoVisitante',
+        component: VisitanteCadastro,
+        title: 'Adicionar Visitante',
+        meta: { requiredAuth: true }
+    },
+    {
+        path: '/visitante/editar',
+        name: 'EditarVisitante',
+        component: VisitanteCadastro,
+        title: 'Editar Visitante',
         meta: { requiredAuth: true }
     },
 ];

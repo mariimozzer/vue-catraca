@@ -8,19 +8,18 @@
             </div>
         </div>
 
-        <div class="row mt-3">
+        <div class="row">
             <div class="col-sm-8">
                 <label for="nomeCompleto">Nome</label>
                 <input type="text" id="nomeCompleto" v-model="pessoa.nomeCompleto" class="form-control">
             </div>
             <div class="col-sm-4">
                 <label for="cpf">CPF</label>
-                <input type="text" id="CPF" v-model="pessoa.CPF" class="form-control">
+                <input type="text" id="CPF" v-model="pessoa.CPF" v-mask="'###.###.###-##'" class="form-control">
             </div>
         </div>
 
-        <div class="row mt-3 ">
-
+        <div class="row mt-3">
             <div class=" col-sm-3">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="name" id="sexo" value="feminino"
@@ -33,9 +32,12 @@
                     <label class="form-check-label" for="sexo">Masculino</label>
                 </div>
             </div>
+        </div>
+
+        <div class="row mt-3">
             <div class="col-sm-2">
                 <label for="dtNasc">Data de nascimento</label>
-                <input type="text" id="dtNasc" v-model="pessoa.dtNasc" class="form-control">
+                <input  type="text" id="dtNasc" v-model="pessoa.dtNasc" v-mask="'##/##/####'" class="form-control">
             </div>
             <div class="col-sm-4">
                 <label for="email">E-mail</label>
@@ -45,7 +47,6 @@
                 <label for="celular">Celular</label>
                 <input type="text" id="celular" v-model="pessoa.celular" class="form-control">
             </div>
-
         </div>
 
         <div class="row mt-3">
@@ -117,10 +118,10 @@ export default {
             },
 
         cadastrarPessoa() {
-            if(this.pessoa.modeloValidoCadastro()) {
+            /* if(this.pessoa.modeloValidoCadastro()) {
                  alert("Insira o nome do colaborador para cadastrar!");
                  return;
-             }
+             } */
             pessoaService.cadastrar(this.pessoa)
                 .then(() => {
                     alert("Colaborador cadastrado com sucesso!");

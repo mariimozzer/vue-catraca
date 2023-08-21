@@ -18,26 +18,6 @@
                 <button @click="salvarSetor" class="btn btn-primary float-right mr-2">Salvar</button>
             </div>
         </div>
-        <!-- modal -->
-        <div class="modal is-valid" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
     </div>
 </template>
 
@@ -52,15 +32,12 @@ export default {
         return {
             setor: new Setor(),
             modoCadastro: true,  
-
         }
     },
 
     mounted() {
-
        let id = this.$route.params.id;
        if(!id) return;  //verifica se a tela trouxe algum produto, caso não tenha setor, a tela será carregada em modo de cadastro
-
        this.modoCadastro = false; 
        this.obterSetorId(id);
        

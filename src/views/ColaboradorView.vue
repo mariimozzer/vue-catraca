@@ -8,7 +8,7 @@
         </div>
         <div class="row sub-contnainer">
             <div class="col-sm-3">
-                <ButtonComponent :callback="adicionarPessoa" value="Adicionar colaborador"  data-toggle="modal" data-target="#exampleModal"></ButtonComponent>
+                <ButtonComponent :callback="adicionarPessoa" value="Adicionar colaborador"></ButtonComponent>
             </div>       
         </div>
         <div class="row">
@@ -46,10 +46,6 @@
                 </table>
             </div>
         </div>
-
-        
-
-
     </div>
 </template>
 

@@ -33,18 +33,26 @@
                         <tr>
                             <th>Nome</th>
                             <th>CPF</th>
+                            <th>Sexo</th>
+                            <th>Data de nascimento</th>
+                            <th>Celular</th>
+                            <th>E-mail</th>
                             <th>Foto</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in pessoas" :key="item" v-show="item.visitante == 1">
+                        <tr v-for="item in pessoas" :key="item" v-show="(item.visitante == 1)">
                             <!-- v-show para trazer somente as pessoas marcadas como visitantes (visitante = 1) -->
                             <td>{{ item.nomeCompleto }}</td>
                             <td>{{ item.CPF }}</td>
+                            <td>{{ item.sexo }}</td>
+                            <td>{{ item.dtNasc }}</td>
+                            <td>{{ item.celular }}</td>
+                            <td>{{ item.email }}</td>
                             <td>{{ item.path_image }}</td>
                             <td>
-                                <i @click="editarColaborador(item)" class="fa fa-edit icones-tabela"></i>
-                                <i @click="excluirColaborador(item)" class="fa fa-trash icones-tabela"></i>
+                                <i @click="editarPessoa(item)" class="fa fa-edit icones-tabela"></i>
+                                <i @click="excluirPessoa(item)" class="fa fa-trash icones-tabela"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -73,10 +81,6 @@ export default {
         }
     },
 
-    filters: {
-
-    },
-
     methods: {
 
         ordenarPessoas(a, b) {
@@ -97,6 +101,12 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
+        },
+        adicionarPessoa() {
+            this.$router.push({ name: "NovoVisitante" })
+        },
+        editarPessoa(pessoa) {
+            this.$router.push({ name: "EditarVisitante", params: { id: pessoa.id } })
         },
 
     },
