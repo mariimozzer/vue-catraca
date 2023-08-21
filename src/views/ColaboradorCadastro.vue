@@ -45,7 +45,7 @@
             </div>
             <div class="col-sm-3">
                 <label for="celular">Celular</label>
-                <input type="text" id="celular" v-model="pessoa.celular" class="form-control">
+                <input type="text" id="celular" v-model="pessoa.celular" v-mask="'(##) #####-####'" class="form-control">
             </div>
         </div>
 
