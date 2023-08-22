@@ -15,19 +15,19 @@
             </div>
             <div class="col-sm-4">
                 <label for="cpf">CPF</label>
-                <input type="text" id="CPF" v-model="pessoa.CPF" class="form-control">
+                <input type="text" id="CPF" v-model="pessoa.CPF" class="form-control" v-mask="'###.###.###-##'">
             </div>
         </div>
 
         <div class="row mt-3">
                 <div class=" col-sm-3">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="name" id="sexo" value="feminino"
+                        <input class="form-check-input" type="radio" name="name" id="feminino" value="feminino"
                             v-bind:checked="pessoa.sexo == 'f'">
                         <label class="form-check-label" for="sexo">Feminino</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="sexo" id="sexo" value="masculino"
+                        <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino"
                             v-bind:checked="pessoa.sexo == 'm'">
                         <label class="form-check-label" for="sexo">Masculino</label>
                     </div>
@@ -37,7 +37,7 @@
             <div class="row mt-3">
                 <div class="col-sm-2">
                     <label for="dtNasc">Data de nascimento</label>
-                    <input type="text" id="dtNasc" v-model="pessoa.dtNasc" class="form-control">
+                    <input type="text" id="dtNasc" v-model="pessoa.dtNasc" class="form-control" v-mask="'##/##/####'">
                 </div>
                 <div class="col-sm-4">
                     <label for="email">E-mail</label>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-sm-3">
                     <label for="celular">Celular</label>
-                    <input type="text" id="celular" v-model="pessoa.celular" class="form-control">
+                    <input type="text" id="celular" v-model="pessoa.celular" class="form-control" v-mask="'(##) #####-####'">
                 </div>
             </div>
 
@@ -76,7 +76,8 @@ export default {
     name: "VisitanteCadastro",
     data() {
         return {
-            pessoa: new Pessoa(),
+           // pessoa: new Pessoa(),
+            pessoa: new Pessoa({ id_setor: null }),
             modoCadastro: true,
         }
     },
@@ -118,10 +119,10 @@ export default {
         },
 
         cadastrarPessoa() {
-            if (this.pessoa.modeloValidoCadastro()) {
+            /* if (this.pessoa.modeloValidoCadastro()) {
                 alert("Insira o nome do visitante para cadastrar!");
                 return;
-            }
+            } */
             pessoaService.cadastrar(this.pessoa)
                 .then(() => {
                     alert("Visitante cadastrado com sucesso!");

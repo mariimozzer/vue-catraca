@@ -22,13 +22,13 @@
         <div class="row mt-3">
             <div class=" col-sm-3">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="name" id="sexo" value="feminino"
-                        v-bind:checked="pessoa.sexo == 'f'">
+                    <input class="form-check-input" type="radio" name="sexo" id="feminino" value="feminino"
+                        v-bind:checked="pessoa.sexo == 'f'" v-model="pessoa.sexo">
                     <label class="form-check-label" for="sexo">Feminino</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="sexo" id="sexo" value="masculino"
-                        v-bind:checked="pessoa.sexo == 'm'">
+                    <input class="form-check-input" type="radio" name="sexo" id="masculino" value="masculino"
+                        v-bind:checked="pessoa.sexo == 'm'" v-model="pessoa.sexo">
                     <label class="form-check-label" for="sexo">Masculino</label>
                 </div>
             </div>
@@ -48,13 +48,20 @@
                 <input type="text" id="celular" v-model="pessoa.celular" v-mask="'(##) #####-####'" class="form-control">
             </div>
         </div>
-
-        <div class="row mt-3">
+        <!-- <div class="row mt-3">
         <div class="col-sm-3">
             <label for="id_setor">Setor</label>
             <input type="text" id="id_setor" v-model="pessoa.id_setor" class="form-control">
         </div>
 
+    </div> -->
+    <div class="col-sm-3">
+        <label for="id_setor">Setor</label>
+        <select v-model="pessoa.id_setor" class="form-control">
+            <option v-for="setor in listaDeSetores" :key="setor.id" :value="setor">
+                {{ setor.nome }}
+            </option>
+        </select>
     </div>
 
         <div class="row">
@@ -70,22 +77,28 @@
 <script>
 import Pessoa from '@/models/pessoa-model';
 import pessoaService from '@/service/pessoa-service';
+import axios from 'axios';
 
 export default {
 
     name: "ColaboradorCadastro",
     data() {
         return {
-            pessoa: new Pessoa(),
+            pessoa: new Pessoa({ id_setor: null}),
             modoCadastro: true,
+            listaDeSetores: []
         }
     },
 
     mounted() {
         let id = this.$route.params.id;
-        if (!id) return;  //verifica se a tela trouxe algo, caso não tenha pessoa, a tela será carregada em modo de cadastro
-        this.modoCadastro = false;
-        this.obterPessoaId(id);
+        //verifica se a tela trouxe algo, caso não tenha pessoa, a tela será carregada em modo de cadastro
+        if (id) {
+            this.modoCadastro = false;
+            this.obterPessoaId(id);
+        }
+
+        this.carregarSetores();
     },
 
     methods: {
@@ -125,6 +138,7 @@ export default {
             pessoaService.cadastrar(this.pessoa)
                 .then(() => {
                     alert("Colaborador cadastrado com sucesso!");
+                    console.log(this.pessoa);
                     this.pessoa = new Pessoa();
                     this.$router.push({ name: "Colaborador" })
                 })
@@ -135,7 +149,19 @@ export default {
 
         salvarPessoa() {
             (this.modoCadastro) ? this.cadastrarPessoa() : this.atualizarPessoa();
-        }
+        },
+
+        carregarSetores() {
+            axios.get('http://192.168.0.6:8000/api/setor')
+                .then(response => {
+                    this.listaDeSetores = response.data.data;
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert("Erro ao carregar a lista de setores. Verifique a conexão e tente novamente.");
+                });
+        },        
     }
 }
 

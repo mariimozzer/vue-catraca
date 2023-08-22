@@ -11,18 +11,12 @@
 </template>
 
 <script>
-
 import MenuComponent from '@/components/menu/MenuComponent.vue'
-
 export default {
-
  components: {
   MenuComponent
-  
  }
-
 }
-
 </script>
 
 <style>

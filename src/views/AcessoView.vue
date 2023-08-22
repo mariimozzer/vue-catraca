@@ -65,7 +65,7 @@ export default {
 <style>
 img {
    width: 400px;
-    height: 400px;
-    overflow: hidden;    
+   height: 400px;
+   overflow: hidden;    
 }
 </style>
