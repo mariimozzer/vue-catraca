@@ -1,26 +1,27 @@
 <template>
     <div class="container">
 
-        <div class="row">
+        <!-- ADICIONAR / EDITAR -->
+
+        <div class="row mb-4">
             <div class="col-sm-12">
                 <h1 class="titulo">{{ modoCadastro ? "Adicionar" : "Editar" }} Colaborador</h1>
                 <hr>
             </div>
         </div>
 
+        <!-- NOME COMPLETO E CPF -->
+
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
                 <label for="nomeCompleto">Nome</label>
                 <input type="text" id="nomeCompleto" v-model="pessoa.nomeCompleto" class="form-control">
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <label for="cpf">CPF</label>
                 <input type="text" id="CPF" v-model="pessoa.CPF" v-mask="'###.###.###-##'" class="form-control">
             </div>
-        </div>
-
-        <div class="row mt-3">
-            <div class=" col-sm-3">
+            <div class="col-sm-4 d-flex">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="sexo" id="feminino" value="feminino"
                         v-bind:checked="pessoa.sexo == 'f'" v-model="pessoa.sexo">
@@ -34,10 +35,12 @@
             </div>
         </div>
 
+        <!-- DT NASC / EMAIL / CELULAR -->
+
         <div class="row mt-3">
             <div class="col-sm-2">
                 <label for="dtNasc">Data de nascimento</label>
-                <input  type="text" id="dtNasc" v-model="pessoa.dtNasc" v-mask="'##/##/####'" class="form-control">
+                <input type="text" id="dtNasc" v-model="pessoa.dtNasc" v-mask="'##/##/####'" class="form-control">
             </div>
             <div class="col-sm-4">
                 <label for="email">E-mail</label>
@@ -45,24 +48,25 @@
             </div>
             <div class="col-sm-3">
                 <label for="celular">Celular</label>
-                <input type="text" id="celular" v-model="pessoa.celular" v-mask="'(##) #####-####'" class="form-control">
+                <input type="text" id="celular" v-model="pessoa.celular" v-mask="'(##) #####-####'"
+                    class="form-control">
             </div>
         </div>
-        <!-- <div class="row mt-3">
-        <div class="col-sm-3">
-            <label for="id_setor">Setor</label>
-            <input type="text" id="id_setor" v-model="pessoa.id_setor" class="form-control">
+
+        <!-- SETOR -->
+
+        <div class="row mt-3">
+            <div class="col-sm-3">
+                <label for="id_setor">Setor</label>
+                <select v-model="pessoa.id_setor" class="form-control">
+                    <option v-for="setor in listaDeSetores" :key="setor.id" :value="setor">
+                        {{ setor.nome }}
+                    </option>
+                </select>
+            </div>
         </div>
 
-    </div> -->
-    <div class="col-sm-3">
-        <label for="id_setor">Setor</label>
-        <select v-model="pessoa.id_setor" class="form-control">
-            <option v-for="setor in listaDeSetores" :key="setor.id" :value="setor">
-                {{ setor.nome }}
-            </option>
-        </select>
-    </div>
+        <!-- SALVAR / CANCELAR -->
 
         <div class="row">
             <div class="col-sm-12 mt-4">
@@ -70,7 +74,6 @@
                 <button @click="salvarPessoa" class="btn btn-primary float-right mr-2">Salvar</button>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -102,6 +105,7 @@ export default {
     },
 
     methods: {
+
         obterPessoaId(id) {
             pessoaService.obterPorId(id)
                 .then(response => {
@@ -137,7 +141,6 @@ export default {
              } */
             pessoaService.cadastrar(this.pessoa)
                 .then(() => {
-                    alert("Colaborador cadastrado com sucesso!");
                     console.log(this.pessoa);
                     this.pessoa = new Pessoa();
                     this.$router.push({ name: "Colaborador" })
@@ -152,7 +155,7 @@ export default {
         },
 
         carregarSetores() {
-            axios.get('http://192.168.0.6:8000/api/setor')
+            axios.get('http://192.168.0.6:8001/api/setor')
                 .then(response => {
                     this.listaDeSetores = response.data.data;
                     console.log(response.data);

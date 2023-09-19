@@ -24,6 +24,7 @@
 <script>
 import Setor from '@/models/setor-model.js';
 import setorService from '../service/setor-service';
+import axios from 'axios';
 
 export default {
     
@@ -36,12 +37,16 @@ export default {
     },
 
     mounted() {
-       let id = this.$route.params.id;
-       if(!id) return;  //verifica se a tela trouxe algum produto, caso não tenha setor, a tela será carregada em modo de cadastro
-       this.modoCadastro = false; 
-       this.obterSetorId(id);
-       
-    },
+
+      let id = this.$route.params.id;
+        //verifica se a tela trouxe algo, caso não tenha pessoa, a tela será carregada em modo de cadastro
+        if (id) {
+            this.modoCadastro = false;
+            this.obterPessoaId(id);
+        }
+
+        this.carregarSetores();
+},
 
     methods: {
 
@@ -104,8 +109,21 @@ export default {
         
         salvarSetor() {
             (this.modoCadastro) ? this.cadastrarSetor() : this.atualizarSetor();
-        }
-    }
+        },
+
+        carregarSetores() {
+            axios.get('http://192.168.0.6:8001/api/setor')
+                .then(response => {
+                    this.listaDeSetores = response.data.data;
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                    alert("Erro ao carregar a lista de setores. Verifique a conexão e tente novamente.");
+                });
+        },
+        
+    },
 }
 
 </script>

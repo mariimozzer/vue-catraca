@@ -49,7 +49,7 @@
                             <td>{{ item.dtNasc }}</td>
                             <td>{{ item.celular }}</td>
                             <td>{{ item.email }}</td>
-                            <td>{{ item.path_image }}</td>
+                            <td><button>Ver foto</button></td>
                             <td>
                                 <i @click="editarPessoa(item)" class="fa fa-edit icones-tabela"></i>
                                 <i @click="excluirPessoa(item)" class="fa fa-trash icones-tabela"></i>

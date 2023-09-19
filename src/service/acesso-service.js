@@ -8,6 +8,18 @@ function obterTodos(){
     });
 } 
 
+function buscarPathImagem(idFoto) {
+  if (idFoto) {
+    const apiPath = `http://192.168.0.6:8000/api/upload/nf/${idFoto}`;
+    return new Promise((resolve, reject) => {
+      api.get(apiPath)
+        .then(response => resolve(response.data))
+        .catch(error => reject(error));
+    });
+  } 
+}
+
 export default {
-    obterTodos
+    obterTodos,
+    buscarPathImagem,
 }

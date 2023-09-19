@@ -1,4 +1,4 @@
-export default class Acesso {
+export default class Pessoa {
     constructor(obj){
         
         obj = obj || {};
