@@ -41,7 +41,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in pessoas" :key="item" v-show="(item.visitante == 1)">
+                        <tr v-for="item in pessoas" :key="item.id" v-show="(item.visitante == 1)">
                             <!-- v-show para trazer somente as pessoas marcadas como visitantes (visitante = 1) -->
                             <td>{{ item.nomeCompleto }}</td>
                             <td>{{ item.CPF }}</td>
@@ -107,6 +107,12 @@ export default {
         },
         editarPessoa(pessoa) {
             this.$router.push({ name: "EditarVisitante", params: { id: pessoa.id } })
+        },
+
+        excluirPessoa(id) {
+            
+                this.resultado.splice(this.resultado.indexOf(id), 1)
+         
         },
 
     },

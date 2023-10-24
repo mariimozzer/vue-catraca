@@ -19,7 +19,7 @@
             </div>
             <div class="col-sm-2">
                 <label for="cpf">CPF</label>
-                <input type="text" id="CPF" v-model="pessoa.CPF" v-mask="'###.###.###-##'" class="form-control">
+                <input type="text" id="CPF" v-model="pessoa.CPF" v-mask="cpfMask" class="form-control">
             </div>
             <div class="col-sm-4 d-flex">
                 <div class="form-check form-check-inline">
@@ -40,7 +40,7 @@
         <div class="row mt-3">
             <div class="col-sm-2">
                 <label for="dtNasc">Data de nascimento</label>
-                <input type="text" id="dtNasc" v-model="pessoa.dtNasc" v-mask="'##/##/####'" class="form-control">
+                <input type="text" id="dtNasc" v-model="pessoa.dtNasc" class="form-control">
             </div>
             <div class="col-sm-4">
                 <label for="email">E-mail</label>
@@ -48,7 +48,7 @@
             </div>
             <div class="col-sm-3">
                 <label for="celular">Celular</label>
-                <input type="text" id="celular" v-model="pessoa.celular" v-mask="'(##) #####-####'"
+                <input type="text" id="celular" v-model="pessoa.celular" v-mask="celularMask"
                     class="form-control">
             </div>
         </div>
@@ -89,7 +89,11 @@ export default {
         return {
             pessoa: new Pessoa({ id_setor: null}),
             modoCadastro: true,
-            listaDeSetores: []
+            listaDeSetores: [],
+
+            cpfMask: "###.###.###-##",
+            dataMask: "##/##/####",
+            celularMask: "(##)#####-####"
         }
     },
 
@@ -164,7 +168,8 @@ export default {
                     console.log(error);
                     alert("Erro ao carregar a lista de setores. Verifique a conexão e tente novamente.");
                 });
-        },        
+        },  
+        
     }
 }
 
