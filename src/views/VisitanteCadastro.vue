@@ -49,13 +49,6 @@
             </div>
         </div>
 
-        <div class="row mt-3">
-            <div class="col-sm-3">
-                <label for="id_setor">Setor</label>
-                <input type="text" id="id_setor" v-model="pessoa.id_setor" class="form-control">
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-sm-12 mt-4">
                 <button @click="cancelarAcao" class="btn btn-default float-right">Cancelar</button>

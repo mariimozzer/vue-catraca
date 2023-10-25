@@ -40,7 +40,7 @@
         <div class="row mt-3">
             <div class="col-sm-2">
                 <label for="dtNasc">Data de nascimento</label>
-                <input type="text" id="dtNasc" v-model="pessoa.dtNasc" class="form-control">
+                <input type="date" id="dtNasc" v-model="pessoa.dtNasc" class="form-control">
             </div>
             <div class="col-sm-4">
                 <label for="email">E-mail</label>
@@ -139,11 +139,9 @@ export default {
             },
 
         cadastrarPessoa() {
-            /* if(this.pessoa.modeloValidoCadastro()) {
-                 alert("Insira o nome do colaborador para cadastrar!");
-                 return;
-             } */
+         
             pessoaService.cadastrar(this.pessoa)
+            console.log(this.pessoa)
                 .then(() => {
                     console.log(this.pessoa);
                     this.pessoa = new Pessoa();

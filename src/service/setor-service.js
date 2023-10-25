@@ -37,8 +37,11 @@ function atualizar(setor){
 function deletar(id){
     return new Promise((resolve, reject) => {
         return api.delete(`/setor/${id}`)
+        
         .then(response => resolve(response))
+        
         .catch(error => reject(error));
+       
     });
 }
 

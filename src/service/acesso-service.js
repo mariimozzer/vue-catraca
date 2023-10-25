@@ -19,7 +19,16 @@ function buscarPathImagem(idFoto) {
   } 
 }
 
+function obterAcessoPorCartaoELocal(cartaoId) {
+  return new Promise((resolve, reject) => {
+    return api.get(`/acesso/cartao/${cartaoId}`)
+      .then(response => resolve(response))
+      .catch(error => reject(error));
+  });
+}
+
 export default {
     obterTodos,
     buscarPathImagem,
+    obterAcessoPorCartaoELocal
 }

@@ -75,6 +75,22 @@ export default {
         editarSetor(setor) {
             this.$router.push({ name: "EditarSetor", params: { id: setor.id } })
         },
+        excluirSetor(id) {
+            console.log("id para deletar", id);
+            setorService
+                .deletar(id)
+                .then(response => {
+                    console.log(response);
+                    
+                    this.setores = this.setores.filter(item => item.id !== id);
+                })
+                .catch(error => {
+                    console.log("Error deleting setor:", error);
+                });
+
+        }
+
+
     },
     mounted() {
         this.obterTodosSetores();

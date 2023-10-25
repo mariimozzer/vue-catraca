@@ -22,7 +22,11 @@
                     </tr>
                 </tbody>
             </table>
-            <img v-if="mostraFoto" :src="fotoPessoa" @change="buscaUltimaFoto()" img/>
+
+            <div>
+                <img v-if="mostraFoto" :src="fotoPessoa" />
+            </div>
+                       
         </div>
     </div>
 </template>
@@ -30,6 +34,8 @@
 <script>
 import acessoService from '@/service/acesso-service';
 import Acesso from '@/models/acesso-model';
+import pessoaService from '@/service/pessoa-service';
+
 
 export default {
 
@@ -71,7 +77,7 @@ export default {
     }, */
 
     mounted() {
-        this.obterTodosAcessos();
+        //this.obterTodosAcessos();
         
         this.ws = new WebSocket('ws://192.168.0.6:8081');
         //cria objeto websocket
@@ -87,69 +93,45 @@ export default {
 
     methods: {
 
-        handleMessage(event) {
+        async handleMessage(event) {
             this.message = event.data;
-
-            console.log('ID DA PESSOA: ', this.message);
-            
-            /* if (this.message.startsWith('passou')) {  
-                this.mostraFoto = true;
-            } */
+            console.log("Websocket enviou: ", this.message);
+            this.obterTodosAcessos();
 
             try {
-                const idMessage = JSON.parse(this.message);
-                console.log('idMessagem ', idMessage);
+                const messageData = JSON.parse(this.message);
 
-                if (idMessage.id) {
+                if (messageData && messageData.pessoa_id) {
+                    const idPessoa = messageData.pessoa_id;
+                    console.log("ID da pessoa: ", idPessoa);
 
-                    const idPessoa = idMessage.id;
+                    const pessoaInfo = await pessoaService.obterInformacoesPessoa(idPessoa);
+                    console.log("Info da pessoa", pessoaInfo);
 
-                    acessoService.buscarPathImagem(idPessoa)
-                        .then(response => {
-
-                            this.fotoLocal = response.nf_path; //caminho da imagem
-
-                            this.fotoPessoa = this.fotoUrl + this.fotoLocal; //url completa da imagem
-
-                            this.mostrarFoto = true;
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
-
+                    if (pessoaInfo.data.path_image) {
+                        console.log("imagem da pessoa ", pessoaInfo.data.path_image)
+                        this.fotoPessoa = pessoaInfo.data.path_image;
+                        this.mostraFoto = true;
+                    } else {
+                        console.error('A pessoa não possui uma imagem associada.');
+                    }
                 } else {
-                    console.error('WebSocket não retornou id');
+                    console.error('WebSocket não retornou o ID da pessoa');
                 }
             } catch (error) {
-                //passar para alerta na tela
                 console.error('Erro!', error);
             }
         },
 
+
         obterTodosAcessos() {
             acessoService.obterTodos().then((response) => {
                     this.acessos = response.data.data.map((a) => new Acesso(a));
-                    //console.log(this.acessos);
+                    console.log(this.acessos);
                 }).catch(error => {
                     console.log(error);
                 });
             },
-
-        buscaUltimaFoto() {
-
-        },
-
-
-
-
-
-        /* carrega() {
-            let ws = new WebSocket('ws://192.168.0.6:8081');
-            ws.addEventListener('message', function (message) {
-                this.saida = message.data;
-                console.log(message);
-            })
-        }, */
     },
 
     

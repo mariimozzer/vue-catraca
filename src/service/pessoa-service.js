@@ -40,11 +40,21 @@ function deletar(id){
     });
 } 
 
+function obterInformacoesPessoa(idPessoa) {
+    return new Promise((resolve, reject) => {
+        return api.get(`/pessoa/${idPessoa}`)
+            .then(response => resolve(response))
+            .catch(error => reject(error));
+    });
+}
+
+
 
 export default {
     obterTodos,
     obterPorId,
     cadastrar,
     atualizar,
-    deletar
+    deletar,
+    obterInformacoesPessoa
 }
