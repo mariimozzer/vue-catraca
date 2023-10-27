@@ -13,7 +13,7 @@ props: {
 </script>
 
 <style scoped>
-button{
+/* button{
     width: 100%;
     color: #fff;
     background-color: var(--cor-primaria);
@@ -26,5 +26,5 @@ button{
 
     button:hover {
         background-color: var(--cor-secundaria);
-    }
+    } */
 </style>

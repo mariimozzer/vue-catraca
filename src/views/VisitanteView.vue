@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mt-3">
 
         <div class="row">
 
@@ -7,7 +7,8 @@
 
                 <h2>Visitantes</h2>
 
-                <hr>
+                <input type="text" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa"
+                                aria-describedby="basic-addon1" v-model="filtro" />
 
             </div>
 
@@ -41,7 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item in pessoas" :key="item.id" v-show="(item.visitante == 1)">
+                        <tr v-for="item of pessoasFiltradas" :key="item.id" v-show="(item.visitante == 1)">
                             <!-- v-show para trazer somente as pessoas marcadas como visitantes (visitante = 1) -->
                             <td>{{ item.nomeCompleto }}</td>
                             <td>{{ item.CPF }}</td>
@@ -63,7 +64,6 @@
 </template>
 
 <script>
-import ButtonComponent from '@/components/button/ButtonComponent.vue';
 import pessoaService from '@/service/pessoa-service';
 import Pessoa from '../models/pessoa-model'
 //import conversorDeData from '@/utils/conversor-data'
@@ -73,12 +73,29 @@ export default {
 
     name: 'VisitanteView',
     components: {
-        ButtonComponent
+       
     },
     data() {
         return {
             pessoas: [],
+
+            filtro: '',
         }
+    },
+
+    computed: {
+        pessoasFiltradas() {
+            return this.acessos.filter(pessoa => {
+                const buscaPessoa = this.filtro.toLowerCase();
+                return (
+                    (pessoa.nomeCompleto && pessoa.nomeCompleto.toLowerCase().includes(buscaPessoa)) ||
+                    (pessoa.CPF && pessoa.CPF.toLowerCase().includes(buscaPessoa)) ||
+                    (pessoa.sexo && pessoa.sexo.toLowerCase().includes(buscaPessoa))
+
+                    /* continuar daqui */
+                );
+            });
+        },
     },
 
     methods: {
