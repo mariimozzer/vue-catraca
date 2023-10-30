@@ -6,9 +6,8 @@
             <div class="col-sm-12">
 
                 <h2>Visitantes</h2>
-
-                <input type="text" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa"
-                                aria-describedby="basic-addon1" v-model="filtro" />
+                <hr>
+               
 
             </div>
 
@@ -18,8 +17,9 @@
 
             <div class="col-sm-3">
 
-                <ButtonComponent :callback="adicionarPessoa" value="Adicionar visitante"></ButtonComponent>
-
+                <b-button :callback="adicionarPessoa" value="Adicionar visitante">Cadastrar Visitante</b-button>
+                <input type="text" class="form-control" placeholder="Pesquisa" aria-label="Pesquisa"
+                                aria-describedby="basic-addon1" v-model="filtro" />
             </div>
 
         </div>
@@ -27,6 +27,23 @@
         <div class="row">
 
             <div class="col-sm-12">
+
+  <div class="modal-mask" v-if="showModal">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3>Adicionar Nova Visita</h3>
+          <hr>
+          
+          <b-button class="modal-default-button" @click="fecharModal">Fechar</b-button>
+        </div>
+        <div class="modal-body">
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
 
                 <table class="table table-hover">
 
@@ -38,11 +55,11 @@
                             <th>Data de nascimento</th>
                             <th>Celular</th>
                             <th>E-mail</th>
-                            <th>Foto</th>
+                            <th>QR-Code</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="item of pessoasFiltradas" :key="item.id" v-show="(item.visitante == 1)">
+                        <tr v-for="item of pessoas" :key="item.id" v-show="(item.visitante == 1)">
                             <!-- v-show para trazer somente as pessoas marcadas como visitantes (visitante = 1) -->
                             <td>{{ item.nomeCompleto }}</td>
                             <td>{{ item.CPF }}</td>
@@ -50,7 +67,7 @@
                             <td>{{ item.dtNasc }}</td>
                             <td>{{ item.celular }}</td>
                             <td>{{ item.email }}</td>
-                            <td><button>Ver foto</button></td>
+                            <td><b-button @click="abrirModal" style="background-color: var(--cor-secundaria);"><i class="fa-solid fa-qrcode"></i></b-button></td>
                             <td>
                                 <i @click="editarPessoa(item)" class="fa fa-edit icones-tabela"></i>
                                 <i @click="excluirPessoa(item)" class="fa fa-trash icones-tabela"></i>
@@ -78,24 +95,24 @@ export default {
     data() {
         return {
             pessoas: [],
-
+            showModal: false,
             filtro: '',
         }
     },
 
     computed: {
-        pessoasFiltradas() {
-            return this.acessos.filter(pessoa => {
-                const buscaPessoa = this.filtro.toLowerCase();
-                return (
-                    (pessoa.nomeCompleto && pessoa.nomeCompleto.toLowerCase().includes(buscaPessoa)) ||
-                    (pessoa.CPF && pessoa.CPF.toLowerCase().includes(buscaPessoa)) ||
-                    (pessoa.sexo && pessoa.sexo.toLowerCase().includes(buscaPessoa))
+        // pessoasFiltradas() {
+        //     return this.acessos.filter(pessoa => {
+        //         const buscaPessoa = this.filtro.toLowerCase();
+        //         return (
+        //             (pessoa.nomeCompleto && pessoa.nomeCompleto.toLowerCase().includes(buscaPessoa)) ||
+        //             (pessoa.CPF && pessoa.CPF.toLowerCase().includes(buscaPessoa)) ||
+        //             (pessoa.sexo && pessoa.sexo.toLowerCase().includes(buscaPessoa))
 
-                    /* continuar daqui */
-                );
-            });
-        },
+        //             /* continuar daqui */
+        //         );
+        //     });
+        // },
     },
 
     methods: {
@@ -132,7 +149,17 @@ export default {
          
         },
 
+        abrirModal() {
+      this.showModal = true;
     },
+
+    fecharModal() {
+      this.showModal = false;
+    },
+  
+    },
+
+    
 
     mounted() {
 
@@ -148,5 +175,57 @@ export default {
     margin: 5px;
     color: var(--cor-primaria);
     cursor: pointer;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-wrapper {
+  width: 500px;
+}
+
+.modal-container {
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: var(--cor-primaria);
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>
